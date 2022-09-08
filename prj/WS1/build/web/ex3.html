@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>
+        <h1>THỰC HIỆN PHÉP TOÁN</h1>
+        <form action="ex3" method='get'>
+            <div class="input">
+                <p>Nhập N :</p>
+                <input type='text' name='n' class="setsize" />
+                <p>(1 < n < 100 )</p>
+            </div>
+            <br>
+            <div class="selection">
+                <p> Chọn phép toán : </p>
+                <select name="type" id="selection" class="setsize">
+                    <option value=""></option>
+                    <option value="1">Tổng n số liên tiếp</option>
+                    <option value="2">Tính n!</option>
+                    <option value="3">In dãy lẻ</option>
+                    <option value="4">In dãy số chẵn</option>
+                    <option value="5">Kiểm tra số nguyên tố</option>
+                </select>
+            </div>
+            <br>
+            <input type='submit' name='selection' value="OK" class="submit" /> <br>
+            <div>
+                <p>Kêt quả: </p>
+                <input type='text' name='c' /> <br />
+            </div>
+        </form>
+    </div>
+    <style>
+        div:first-child {
+            box-sizing: border-box;
+            align-items: center;
+            color: blue;
+        }
+
+
+        h1:first-child {
+            padding-left: 60px;
+        }
+
+        form {
+            padding-left: 30px;
+
+        }
+
+        p {
+            width: 150px;
+            margin: 0;
+        }
+
+        .setsize {
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .input {
+            display: flex;
+        }
+
+        .selection {
+            display: flex;
+        }
+
+        .submit {
+            flex: 1;
+            cursor: pointer;
+            margin-left: 200px;
+            border-radius: 5px;
+            width: 60px;
+        }
+
+        #selection {
+            width: 160px;
+        }
+    </style>
+</body>
+
+</html>

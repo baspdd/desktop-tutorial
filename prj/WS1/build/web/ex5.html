@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>
+        <form action="ex5" method='post'>
+            <h1>ĐỐI TƯỢNG STRING</h1>
+            <div class="stringInput" >
+                <p>Nhập đoạn văn</p>
+                <input type='text' name='string'  />
+            </div>
+            <br>
+            <div class="inputIndex">
+                Nhập vị trí
+                <input type='text' name='index' id="setsize" />
+            </div>
+            <br>
+            <div class="inputElement">
+                Nhập chuỗi
+                <input type='text' name='element' id="setsize" />
+            </div>
+            <br>
+            <div class="inputPart">
+                Nhập vị trí cần tách Từ :
+                <input type='text' name='begin' id="setsize" />
+                Đến
+                <input type='text' name='end' id="setsize" />
+
+            </div>
+            <br>
+            <div class="form_submit">
+                <input type="submit" class="submit" name="run" value="Nhập lại">
+                <input type="reset" class="submit" value="Thoát">
+            </div>
+        </form>
+    </div>
+    <style>
+        div {
+            margin-left: 20px;
+        }
+
+        h1 {
+            margin-left: 80px;
+        }
+
+        #setsize {
+            width: 50px;
+        }
+
+        .form_submit {
+            margin-left: 70px;
+        }
+
+
+        .submit {
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100px;
+            margin: 0 2px;
+        }
+    </style>
+</body>
+
+</html>

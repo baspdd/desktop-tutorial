@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script>
+        var request = new XMLHttpRequest();
+                            function search() {
+                                var numberInput = document.form2.numberInput.value;
+                                var url = "Lesson2?numberInput=" + numberInput;
+
+                                try {
+                                    request.onreadystatechange = function () {
+                                        if (request.readyState == 4) {
+                                            var el = document.createElement('html');
+                                            el.innerHTML = request.responseText;
+
+                                            var val = el.getElementsByTagName("input")[3].value;
+                                            if (val == "Enter an integer n")
+                                                document.getElementById("a").value = "";
+                                            document.getElementById("c").value = val;
+                                        }
+                                    }//end of function  
+                                    request.open("GET", url, true);
+                                    request.send();
+                                } catch (e) {
+                                    alert("Unable to connect to server");
+                                }
+                            }
+                            </script>
+    </body>
+</html>

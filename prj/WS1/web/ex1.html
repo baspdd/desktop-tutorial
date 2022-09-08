@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+</head>
+
+<body>
+    <style>
+        div {
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        h1 {
+            color: blue;
+        }
+
+        h1:first-child {
+            padding-left: 60px;
+        }
+
+        form {
+            padding-left: 30px;
+        }
+
+        .form_input {
+            background-color: rgb(173, 236, 236);
+            height: auto;
+            width: 200px;
+            /* border: 1000px 0 0 1000px; */
+            border: none;
+        }
+
+        .submit {
+            display: flex;
+            width: 300px;
+        }
+
+        .form_submit {
+            flex: 1;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .submit {
+            margin-left: 40px;
+        }
+    </style>
+    <div>
+        <form action="ex1" method='get' class="form">
+            <h1>THỰC HIẾN PHÉP TOÁN</h1>
+            Nhập a: <input type='text' name='a' class="form_input" /> <br><br>
+            Nhập b: <input type='text' name='b' class="form_input" /> <br><br>
+            <div class="submit">
+                <input type='submit' name='+' value="a+b" class="form_submit" />
+                <input type='submit' name='-' value="a-b" class="form_submit" />
+                <input type='submit' name='*' value="a*b" class="form_submit" />
+                <input type='submit' name='/' value="a/b" class="form_submit" />
+            </div>
+            <h1 class="submit">KẾT QUẢ</h1>
+        </form>
+    </div>
+
+</body>
+
+</html>

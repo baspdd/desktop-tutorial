@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>
+        <h1>TÌM MIN VÀ TÌM MAX</h1>
+        <form action="ex2" method='get'>
+            <div>
+                IDStudent: <input type='text' name='a' class="form_input" /> <br />
+                FullName: <input type='text' name='b' class="form_input" /> <br />
+                Gender <br />
+            </div>
+            <div class="output">
+                Kết quả
+            </div>
+            <div class="selection">
+                <input type='radio' name='selection' value="max" />
+                Male
+                <input type='radio' name='selection' value="min" />
+                Female
+            </div>
+            <br>
+            <div class="form_submit">
+                <input type="submit" class="submit" name="find" value="Tìm">
+                <input type="reset" class="submit" value="Xóa">
+            </div>
+        </form>
+    </div>
+    <style>
+        div {
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        h1 {
+            color: blue;
+        }
+
+        h1:first-child {
+            padding-left: 60px;
+        }
+
+        form {
+            padding-left: 30px;
+        }
+
+        .form_input {
+            background-color: rgb(173, 236, 236);
+            height: auto;
+            width: 200px;
+            margin-bottom: 10px;
+            /* border: 1000px 0 0 1000px; */
+            border: none;
+        }
+
+        .selection {
+            font-style: italic;
+        }
+
+        .form_submit {
+            display: flex;
+            width: 100px;
+            margin-left: 50px;
+        }
+
+        .submit {
+            flex: 1;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .submit:hover {
+            background-color: rgba(217, 247, 247);
+        }
+    </style>
+</body>
+
+</html>
