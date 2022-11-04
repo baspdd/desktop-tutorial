@@ -1,0 +1,22 @@
+@startuml
+
+actor       Admin
+participant LoginScreen
+participant EditController
+participant LoginController
+participant UserDAO
+database DB
+
+Admin -> LoginScreen : Admin login
+LoginScreen -> LoginController --++: sendRequest()
+
+LoginController -> UserDAO --++ :getUser()
+
+UserDAO -> DB --++ : Query in DB
+
+DB --> UserDAO --++: return User
+UserDAO --> LoginController --++: return User
+LoginController --> EditController --++: sendRedirect
+EditController --> Admin --: display Admin detail
+
+@enduml

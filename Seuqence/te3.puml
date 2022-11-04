@@ -1,0 +1,40 @@
+@startuml
+
+actor       Admin
+participant ADprofileScreen
+participant LoginController
+participant UserDAO
+database DB
+
+Admin -> ADprofileScreen  ++: input username and password
+Admin -> ADprofileScreen : Click "Login"
+LoginScreen -> LoginController --++: sendRequest()
+
+LoginController -> UserDAO --++ :getUser()
+
+UserDAO -> DB --++ : Query in DB
+
+alt Account exist
+    DB --> UserDAO --++: return User
+    UserDAO --> LoginController --++: return User
+    group User
+        LoginController -> User : redirect formal Page
+    end
+    group Admin
+        LoginController -> User --: redirect DashBoard
+    end
+end
+alt Account not exist
+    DB --> UserDAO --++: return null
+    UserDAO --> LoginController --++: return null
+    LoginController -> LoginScreen : redirect and display notice 
+end
+
+alt Empty Input
+   LoginScreen -> LoginScreen : Require input
+end
+
+
+
+
+@enduml
