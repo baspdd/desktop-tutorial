@@ -1,41 +1,30 @@
 @startuml
 
 actor       User
-participant LoginScreen
-participant LoginController
-participant UserDAO
+participant Website
+participant AddtoCartController
+participant ProductDAO
 database DB
+participant Cart
 
-User -> LoginScreen  ++: input username and password
-User -> LoginScreen : Click "Login"
-LoginScreen -> LoginController --++: sendRequest()
+User -> Website  ++: 1.click on "Add to Cart" button
+Website -> AddtoCartController --++: 2.sendRequest()
+AddtoCartController -> AddtoCartController ++--: 3: session.getAttribute('cart')
 
-LoginController -> UserDAO --++ :getUser()
+alt Cart does not exist
+    AddtoCartController -> AddtoCartController ++--: 4: new Cart()
+else Cart exist
+    AddtoCartController -> ProductDAO --++: 5: getProductById()
+    ProductDAO -> DB ++: 6: executeQuery()
+    DB --> ProductDAO --: 7.return result
+    ProductDAO --> AddtoCartController --++: 8.return a Product
+    AddtoCartController -> Cart ++: 9: addItem
+    AddtoCartController -> Cart --: 10: getAll()
+    Cart --> AddtoCartController --++: 11: return list of CartItem
+    AddtoCartController -> AddtoCartController ++--: 12: session.setAttribute('cart')
+    AddtoCartController -> AddtoCartController ++--: 13: session.setAttribute('size')
+    AddtoCartController --> Website : 14: fill "Cart" icon view with size of list CartItem
 
-UserDAO -> DB --++ : Query in DB
-
-alt Account exist
-    DB --> UserDAO --++: return User
-    UserDAO --> LoginController --++: return User
-    group User
-        LoginController -> User : redirect formal Page
-    end
-    group Admin
-        LoginController -> User --: redirect DashBoard
-    end
 end
-alt Account not exist
-    DB --> UserDAO --++: return null
-    UserDAO --> LoginController --++: return null
-    LoginController -> LoginScreen --: redirect and display notice
-end
-
-alt Empty Input
-    User -> LoginScreen ++--: Click "Login"
-    LoginScreen -> User --: Require input
-end
-
-
-
 
 @enduml

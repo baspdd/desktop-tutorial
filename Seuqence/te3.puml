@@ -1,40 +1,20 @@
 @startuml
 
-actor       Admin
-participant ADprofileScreen
-participant LoginController
-participant UserDAO
-database DB
+actor       User
+participant CartDetailPage
+participant CartController
+participant RemoveItemController
+participant Cart
 
-Admin -> ADprofileScreen  ++: input username and password
-Admin -> ADprofileScreen : Click "Login"
-LoginScreen -> LoginController --++: sendRequest()
-
-LoginController -> UserDAO --++ :getUser()
-
-UserDAO -> DB --++ : Query in DB
-
-alt Account exist
-    DB --> UserDAO --++: return User
-    UserDAO --> LoginController --++: return User
-    group User
-        LoginController -> User : redirect formal Page
-    end
-    group Admin
-        LoginController -> User --: redirect DashBoard
-    end
-end
-alt Account not exist
-    DB --> UserDAO --++: return null
-    UserDAO --> LoginController --++: return null
-    LoginController -> LoginScreen : redirect and display notice 
-end
-
-alt Empty Input
-   LoginScreen -> LoginScreen : Require input
-end
-
-
-
+User -> CartDetailPage  ++: 1.click on "X" icon
+CartDetailPage -> RemoveItemController --++: 2.sendRequest()
+RemoveItemController -> RemoveItemController ++--: 3: session.getAttribute('cart')
+RemoveItemController -> Cart ++: 4: removeItem()
+RemoveItemController -> Cart --: 5: getAll()
+Cart --> RemoveItemController --++: 6: return list of CartItem
+RemoveItemController -> RemoveItemController ++--: 7: session.setAttribute('cart')
+RemoveItemController -> RemoveItemController ++--: 8: session.setAttribute('size')
+RemoveItemController --> CartController ++: 9: sendRedirect()
+CartController --> CartDetailPage : 10.distpatch Cart
 
 @enduml

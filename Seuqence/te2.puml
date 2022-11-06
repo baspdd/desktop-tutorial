@@ -1,22 +1,21 @@
 @startuml
 
-actor       Admin
-participant LoginScreen
-participant EditController
-participant LoginController
-participant UserDAO
+actor       User
+participant CartDetailPage
+participant CartController
+participant CategoryDAO
 database DB
 
-Admin -> LoginScreen : Admin login
-LoginScreen -> LoginController --++: sendRequest()
-
-LoginController -> UserDAO --++ :getUser()
-
-UserDAO -> DB --++ : Query in DB
-
-DB --> UserDAO --++: return User
-UserDAO --> LoginController --++: return User
-LoginController --> EditController --++: sendRedirect
-EditController --> Admin --: display Admin detail
+User -> CartDetailPage  ++: 1.click on Cart icon
+CartDetailPage -> CartController --++: 2.sendRequest()
+CartController -> CartController ++--: 3: session.getAttribute('cart')
+alt Cart does not exist
+    CartController -> CartController ++--: 4: new Cart()
+end
+CartController -> CategoryDAO --++: 5: getAllCategories()
+CategoryDAO -> DB ++: 6: executeQuery()
+DB --> CategoryDAO --: 7.return result
+CategoryDAO --> CartController --++: 9.return list Category
+CartController --> CartDetailPage : 10.distpatch Cart
 
 @enduml
