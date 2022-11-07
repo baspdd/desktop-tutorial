@@ -1,0 +1,29 @@
+@startuml
+
+actor       Admin
+participant UserManagementPage
+participant LoadUser
+participant UserDAO
+database DB
+
+alt
+    Admin -> UserManagementPage  ++: 1.Click Page Button
+    UserManagementPage -> LoadUser  --++: 2.doGet()
+    LoadUser --> UserManagementPage --: 3.self call UserController
+end
+
+alt
+    Admin -> UserManagementPage  ++: 1.Click title
+    UserManagementPage -> LoadUser  --++: 2.doGet()
+    LoadUser -> UserDAO --++: 3.sortUser()
+    UserDAO -> DB --++ : 4.Query in DB
+    DB --> UserDAO --++: 5.return User List
+    UserDAO --> LoadUser --++: 6.return User List
+    LoadUser -> UserDAO --++: 7.getByPage()
+    UserDAO --> LoadUser --++: 8.return User List
+    LoadUser --> UserManagementPage --: 9.dispatch
+
+end
+
+
+@enduml

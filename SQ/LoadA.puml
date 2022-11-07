@@ -1,0 +1,31 @@
+@startuml
+
+actor       Admin
+participant AuthorManagementPage
+participant LoadAuthor
+participant BooksController
+participant BookDAO
+database DB
+
+alt
+    Admin -> AuthorManagementPage  ++: 1.Click Page Button
+    AuthorManagementPage -> LoadAuthor  --++: 2.doGet()
+    LoadAuthor --> AuthorManagementPage --: 3.self call AuthorController
+end
+
+alt
+    Admin -> AuthorManagementPage  ++: 1.Click author id
+    AuthorManagementPage -> LoadAuthor  --++: 2.doGet()
+    LoadAuthor -> BooksController --++: 3.doGet()
+    BooksController -> BookDAO --++: 4.getAllBookByAuthorId()
+    BookDAO -> DB --++ : 5.Query in DB
+    DB --> BookDAO --++: 6.return Book List
+    BookDAO --> BooksController --++: 7.return Book List
+    BooksController -> BookDAO --++: 8.getByPage()
+    BookDAO --> BooksController --++: 9.return Book List
+    BooksController --> Admin --: 9.dispatch Book Management Page
+
+end
+
+
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+
+actor       User
+participant SupportPage
+participant SupportController
+participant TicketDAO
+participant AuthorDAO
+database DB
+
+alt
+    User -> SupportPage  ++: 1.Click Read Title
+    SupportPage -> SupportController  --++: 2.doGet()
+    SupportController -> TicketDAO --++: 3.getRead()
+    TicketDAO -> DB --++ : 4.Query in DB
+end
+alt
+    User -> SupportPage  ++: 1.Click UnRead Title
+    SupportPage -> SupportController  --++: 2.doGet()
+    SupportController -> TicketDAO --++: 3.getUnRead()
+    TicketDAO -> DB -- : 4.Query in DB
+end
+alt
+    User -> SupportPage  ++: 1.Click Sending Title
+    SupportPage -> SupportController  --++: 2.doGet()
+    SupportController -> TicketDAO --++: 3.getSent()
+    TicketDAO -> DB  --: 4.Query in DB
+end
+
+DB --> TicketDAO --++: 5.return Ticket List
+TicketDAO --> SupportController --++: 6.return Ticket List
+SupportController -> TicketDAO --++: 7.hasSent()
+TicketDAO -> DB --++: 8.Query in DB
+DB --> TicketDAO --++: 9.return
+TicketDAO --> SupportController --++: 10.return
+SupportController -> AuthorDAO --++: 11.getViews()
+AuthorDAO -> DB --++: 12.Query in DB
+DB --> AuthorDAO --++: 13.return int
+AuthorDAO --> SupportController --++: 14.return int
+SupportController --> SupportPage --: 15.dispatch
+
+
+@enduml

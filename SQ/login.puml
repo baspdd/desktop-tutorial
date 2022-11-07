@@ -1,0 +1,38 @@
+@startuml
+
+actor       User
+participant LoginPage
+participant LoginController
+participant UserDAO
+database DB
+
+alt
+    User -> LoginPage  ++: 1.Input username and password
+    User -> LoginPage  --: 2.Click Login
+    LoginPage -> LoginController --++: 3.doPost()
+    LoginController -> UserDAO --++: 4.getUser()
+    UserDAO -> DB --++ : 5.Query in DB
+    group Account exist
+        DB --> UserDAO ++: 6.return User
+        UserDAO --> LoginController --++: 7.return User
+        group User
+            LoginController --> User : 8.redirect to Formal Page
+        end
+        group Admin
+            LoginController --> User --: 8.redirect to DashBoard
+        end
+    end
+    group Account not exist
+        DB --> UserDAO --: 6.return null
+        UserDAO --> LoginController --++: 7.return null
+        LoginController --> LoginPage --: 8.display notice
+    end
+end
+alt Empty Input
+    User -> LoginPage  ++: 1.Click Login
+    LoginPage -> LoginPage  : 2.Notice Input Require
+
+end
+
+
+@enduml

@@ -4,8 +4,8 @@ actor       User
 participant Website
 participant AddtoCartController
 participant ProductDAO
-database DB
 participant Cart
+database DB
 
 User -> Website  ++: 1.click on "Add to Cart" button
 Website -> AddtoCartController --++: 2.sendRequest()
