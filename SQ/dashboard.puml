@@ -13,35 +13,40 @@ database DB
 
 
 Admin -> DashBoard  --++: Click on "Dash Board" title
-DashBoard -> AuthorDAO ++: getAllAuthor()
-DashBoard -> AuthorDAO : getAllUser()
-DashBoard -> AuthorDAO : getNumQuater()
-DashBoard -> AuthorDAO : getNumYear()
+DashBoard -> AuthorDAO --++: getAllAuthor()
 AuthorDAO -> DB --++ : Query in DB
+DB --> AuthorDAO --++: return Author List
+AuthorDAO --> DashBoard --++: return Author List
 
-DashBoard -> UserDAO ++: getAllUser()
-UserDAO -> DB -- : Query in DB
+DashBoard -> AuthorDAO --++: getAllUser()
+AuthorDAO -> DB --++ : Query in DB
+DB --> AuthorDAO --++: return Author List
+AuthorDAO --> DashBoard --++: return Author List
 
-DashBoard -> BookDAO ++: count()
-BookDAO -> DB -- : Query in DB
+DashBoard -> AuthorDAO --++: getNumQuater()
+AuthorDAO -> DB --++ : Query in DB
+DB --> AuthorDAO --++: return Integer List
+AuthorDAO --> DashBoard --++: return Integer List
+
+DashBoard -> AuthorDAO --++: getNumYear()
+AuthorDAO -> DB --++ : Query in DB
+DB --> AuthorDAO --++: return Integer List
+AuthorDAO --> DashBoard --++: return Integer List
+
+DashBoard -> UserDAO --++: getAllUser()
+UserDAO -> DB --++ : Query in DB
+DB --> UserDAO --++: return User List
+UserDAO --> DashBoard --++: return User List
+
+DashBoard -> BookDAO --++: count()
+BookDAO -> DB --++ : Query in DB
+DB --> BookDAO --++: return int 
+BookDAO --> DashBoard --++: return int 
 
 DashBoard -> CommentDAO --++: count()
-CommentDAO -> DB  --: Query in DB
-
-
-DB --> AuthorDAO : return Author List
-DB --> AuthorDAO : return Integer List
-
-AuthorDAO --> DashBoard ++: return Author List
-AuthorDAO --> DashBoard --: return Integer List
-
-DB --> UserDAO ++: return User List
-UserDAO --> DashBoard --: return User List
-
-DB --> BookDAO ++: return int 
-BookDAO --> DashBoard --: return int 
-DB --> CommentDAO ++: return int 
-CommentDAO --> DashBoard --: return int 
+CommentDAO -> DB  --++: Query in DB
+DB --> CommentDAO --++: return int 
+CommentDAO --> DashBoard --++: return int 
 
 DashBoard --> DashBoardPage --: dispatch
 
