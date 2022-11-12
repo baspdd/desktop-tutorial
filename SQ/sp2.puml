@@ -27,7 +27,7 @@ end
 alt isnotVip
     SupportController -> TicketDAO --++: passReport()
     TicketDAO -> DB --++ : Query in DB
-    DB --> TicketDAO ++: return
+    DB --> TicketDAO --++: return
     TicketDAO --> SupportController --: return
 end
 
