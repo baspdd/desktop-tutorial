@@ -2,43 +2,43 @@
 
 actor       Admin
 participant AdminManagementPage
-participant AdminController
+participant UserController
 participant UserDAO
 database DB
 alt
     Admin -> AdminManagementPage  ++: 1.Input in Search Box
     Admin -> AdminManagementPage  --: 1.Press Enter
-    AdminManagementPage -> AdminController  --++: 2.doPost()
-    AdminController -> UserDAO --++: 3.searchByName()
+    AdminManagementPage -> UserController  --++: 2.doPost()
+    UserController -> UserDAO --++: 3.searchByName()
     UserDAO -> DB --++ : 4.Query in DB
     DB --> UserDAO --++: 5.return Admin List
-    UserDAO --> AdminController --: 6.return Admin List
+    UserDAO --> UserController --: 6.return Admin List
 end
 alt
     group IF
         Admin -> AdminManagementPage  --++: 1.Click on "Up" or "Down" button
-        AdminManagementPage -> AdminController  --++: 2.doPost()
-        AdminController -> UserDAO --++: 3.editRank()
+        AdminManagementPage -> UserController  --++: 2.doPost()
+        UserController -> UserDAO --++: 3.editRank()
         UserDAO -> DB --++: 4.Query in DB
     end
     group IF
         Admin -> AdminManagementPage  --++: 1.Click on "Disable" button
-        AdminManagementPage -> AdminController  --++: 2.doPost()
-        AdminController -> UserDAO --++: 3.disableAdmin()
+        AdminManagementPage -> UserController  --++: 2.doPost()
+        UserController -> UserDAO --++: 3.disableAdmin()
         UserDAO -> DB -- : 4.Query in DB
     end
     DB --> UserDAO --++: 5.return
-    UserDAO --> AdminController --++: 6.return
-    AdminController -> UserDAO --++: 7.getByAccess()
+    UserDAO --> UserController --++: 6.return
+    UserController -> UserDAO --++: 7.getByAccess()
     UserDAO -> DB --++ : 8.Query in DB
     DB --> UserDAO --++: 9.return Admin List
-    UserDAO --> AdminController --: 10.return Admin List
+    UserDAO --> UserController --: 10.return Admin List
 
 end
 
-AdminController -> UserDAO --++: 11.getByPage()
-UserDAO --> AdminController --++: 12.return Admin List
-AdminController --> AdminManagementPage --: 13.dispatch
+UserController -> UserDAO --++: 11.getByPage()
+UserDAO --> UserController --++: 12.return Admin List
+UserController --> AdminManagementPage --: 13.dispatch
 
 
 @enduml

@@ -1,18 +1,18 @@
 @startuml
 
 actor       Admin
-participant AdminManagementPage
-participant AdminController
+participant UserManagementPage
+participant UserController
 participant UserDAO
 database DB
 
-Admin -> AdminController  --++: 1.Click on "Admins Management" title
-AdminController -> UserDAO --++: 2.getByAccess()
+Admin -> UserController  --++: 1.Click on "Admins Management" title
+UserController -> UserDAO --++: 2.getByAccess()
 UserDAO -> DB --++ : 3.Query in DB
 DB --> UserDAO --++: 4.return Admin List
-UserDAO --> AdminController --++: 5.return Admin List
-AdminController -> UserDAO --++: 6.getByPage()
-UserDAO --> AdminController --++: 7.return Admin List
-AdminController --> AdminManagementPage --: 8.dispatch
+UserDAO --> UserController --++: 5.return Admin List
+UserController -> UserDAO --++: 6.getByPage()
+UserDAO --> UserController --++: 7.return Admin List
+UserController --> UserManagementPage --: 8.dispatch
 
 @enduml

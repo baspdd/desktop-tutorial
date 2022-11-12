@@ -23,7 +23,7 @@ alt
         end
     end
     group Account not exist
-        DB --> UserDAO --: 6.return null
+        DB --> UserDAO --++: 6.return null
         UserDAO --> LoginController --++: 7.return null
         LoginController --> LoginPage --: 8.display notice
     end
