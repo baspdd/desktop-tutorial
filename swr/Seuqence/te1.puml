@@ -1,0 +1,30 @@
+@startuml
+
+actor       User
+participant Website
+participant AddtoCartController
+participant ProductDAO
+participant Cart
+database DB
+
+User -> Website  ++: 1.click on "Add to Cart" button
+Website -> AddtoCartController --++: 2.sendRequest()
+AddtoCartController -> AddtoCartController ++--: 3: session.getAttribute('cart')
+
+alt Cart does not exist
+    AddtoCartController -> AddtoCartController ++--: 4: new Cart()
+else Cart exist
+    AddtoCartController -> ProductDAO --++: 5: getProductById()
+    ProductDAO -> DB ++: 6: executeQuery()
+    DB --> ProductDAO --: 7.return result
+    ProductDAO --> AddtoCartController --++: 8.return a Product
+    AddtoCartController -> Cart ++: 9: addItem
+    AddtoCartController -> Cart --: 10: getAll()
+    Cart --> AddtoCartController --++: 11: return list of CartItem
+    AddtoCartController -> AddtoCartController ++--: 12: session.setAttribute('cart')
+    AddtoCartController -> AddtoCartController ++--: 13: session.setAttribute('size')
+    AddtoCartController --> Website : 14: fill "Cart" icon view with size of list CartItem
+
+end
+
+@enduml

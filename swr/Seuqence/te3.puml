@@ -1,0 +1,20 @@
+@startuml
+
+actor       User
+participant CartDetailPage
+participant CartController
+participant RemoveItemController
+participant Cart
+
+User -> CartDetailPage  ++: 1.click on "X" icon
+CartDetailPage -> RemoveItemController --++: 2.sendRequest()
+RemoveItemController -> RemoveItemController ++--: 3: session.getAttribute('cart')
+RemoveItemController -> Cart ++: 4: removeItem()
+RemoveItemController -> Cart --: 5: getAll()
+Cart --> RemoveItemController --++: 6: return list of CartItem
+RemoveItemController -> RemoveItemController ++--: 7: session.setAttribute('cart')
+RemoveItemController -> RemoveItemController ++--: 8: session.setAttribute('size')
+RemoveItemController --> CartController ++: 9: sendRedirect()
+CartController --> CartDetailPage : 10.distpatch Cart
+
+@enduml
