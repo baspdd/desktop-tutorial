@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-05-22T07:05:36.942Z" agent="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="XYCsboqPVOKNn01x_Jz4" version="21.3.2" type="device" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-05-23T06:04:46.142Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50" etag="VtEO5KWLsI7dIurptObs" version="21.3.2" type="device" pages="2">
   <diagram id="HE0IYKD-BkBfxlgNFHw1" name="Page-1">
-    <mxGraphModel dx="2240" dy="1862" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2284" dy="1864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -413,15 +413,15 @@
     </mxGraphModel>
   </diagram>
   <diagram id="AXoBGR_MLKZJGE1NFDvo" name="Trang-2">
-    <mxGraphModel dx="1635" dy="896" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="HUg-reQIVsCj5zVNsk8b-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="300" y="160" width="790" height="760" as="geometry" />
         </mxCell>
-        <mxCell id="0IFNWw9rKpCn1gXUxRyo-1" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="160" y="340" width="30" height="60" as="geometry" />
+        <mxCell id="0IFNWw9rKpCn1gXUxRyo-1" value="Employees" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="170" y="460" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-2" value="Login" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="200" width="120" height="40" as="geometry" />
@@ -438,7 +438,7 @@
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-7" value="Add new patiient" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="280" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="0IFNWw9rKpCn1gXUxRyo-8" value="Manage taxes" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="0IFNWw9rKpCn1gXUxRyo-8" value="View taxes" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="760" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-9" value="invoices report" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -450,7 +450,7 @@
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-12" value="export" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="960" y="460" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="0IFNWw9rKpCn1gXUxRyo-13" value="Manage payments" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="0IFNWw9rKpCn1gXUxRyo-13" value="View payments" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="640" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-14" value="connect insurances" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -459,7 +459,7 @@
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-15" value="Add fee" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="640" y="240" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="0IFNWw9rKpCn1gXUxRyo-16" value="Manage patients" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="0IFNWw9rKpCn1gXUxRyo-16" value="View patients" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="360" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="0IFNWw9rKpCn1gXUxRyo-19" value="Include" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="0IFNWw9rKpCn1gXUxRyo-13" target="0IFNWw9rKpCn1gXUxRyo-12" edge="1">
