@@ -1,0 +1,19 @@
+@startuml
+
+actor Staff
+participant StaffInteraction as inter
+participant StaffCordinator as cor
+participant ProfileService as ser
+
+
+inter --> Staff --++: Display fields
+Staff -> inter --++: Enroll data
+inter -> cor --++: Connect request
+cor -> ser --++ : Add
+ser -> ser ++--: Validate
+ser --> cor --++ : Fail
+cor -->inter --++: Faill
+inter -->Staff --++: Fail message & display fields
+
+
+@enduml
