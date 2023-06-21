@@ -1,0 +1,35 @@
+@startuml
+class Insurance {
+    + id : intt
+    + patientId : id
+    + name : String
+    + validDate : Date
+    --
+    Getter & Setter
+}
+
+class Patient {
+    + id : int
+    + name : string
+    . . . . . . . . .
+    + DateOfBirth : Date
+    --
+    Getter & Setter
+}
+
+class ProfileService {
+    + addInsurance()
+    + modifyInsurance()
+}
+
+interface IProfileService {
+    + addInsurance()
+    + modifyInsurance()
+}
+
+ProfileService --|> IProfileService
+Insurance ..> IProfileService : <<use>>
+Patient "1" *-- "many"  Insurance : Owned
+
+
+@enduml
