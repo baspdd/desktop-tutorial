@@ -1,0 +1,27 @@
+@startuml
+actor       Staff       as staff
+participant StaffInteraction as interact
+participant StaffCoordinate as coor
+participant PatientService as service
+database    Database    as db
+
+staff -> interact ++: 1. Input fields
+
+staff -> interact  : 2. Click "Connect"
+
+interact -> coor --++: 3.validate input
+
+alt fail case
+    coor --> interact --++: 4.return msg
+    interact --> staff --: 5. display msg fail
+else success case
+     coor -> service --++: 4.addInsurance()
+     service -> db --++: 5.query
+     db --> service --++: 6.return msg
+     service --> coor --++: 7.return msg
+     coor --> interact --++: 8.return msg
+    interact --> staff --: 9. display msg
+end
+
+
+@enduml
