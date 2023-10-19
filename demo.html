@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test </title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+
+<body>
+    <div>
+        <div id="header">
+            <h2>EOS</h2>
+            <h2>Student Name :</h2>
+            <h2>Course </h2>
+        </div>
+        <div id="content">
+            <div class="content_head">
+                <h2 class="blue">There are 40 questions and your progress of answering is</h2>
+                <div class="progress-container">
+                    <div class="progress-bar">50%</div>
+                </div>
+            </div>
+
+            <div class="content_body">
+
+                <h1 class="blue">Question</h1>
+                <p>(Choose 1 answer)</p>
+                <p> 1+1 ?</p>
+                <div id="checkboxList"></div>
+                <div class="btn-container">
+                    <button class="btn btn-primary">Back</button>
+                    <button class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var checkboxList = document.getElementById('checkboxList');
+    var items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+    items.forEach(item => {
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = item;
+        checkbox.name = item;
+        var label = document.createElement('label');
+        label.htmlFor = item;
+        label.appendChild(document.createTextNode(item));
+        checkboxList.appendChild(checkbox);
+        checkboxList.appendChild(label);
+        checkboxList.appendChild(document.createElement('br')); // Add a line break
+    });
+</script>
+</html>
