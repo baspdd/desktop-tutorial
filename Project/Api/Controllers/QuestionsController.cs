@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using Microsoft.AspNetCore.OData.Query;
+using NuGet.Packaging;
 
 namespace Api.Controllers
 {
@@ -24,13 +25,27 @@ namespace Api.Controllers
         // GET: api/Questions
         [HttpGet]
         [EnableQuery]
-        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
+        public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetQuestions()
         {
             if (_context.Questions == null)
             {
                 return NotFound();
             }
-            return await _context.Questions.ToListAsync();
+            var list = await _context.Questions.ToListAsync();
+            var ret = new List<QuestionDTO>();
+            foreach (Question item in list)
+            {
+                var question = new QuestionDTO()
+                {
+                    QuestionId = item.QuestionId,
+                    KeyId = item.KeyId,
+                    Content = item.Content,
+                    Answer = item.Answer,
+                    RightAnswer = item.RightAnswer,
+                };
+                ret.Add(question);
+            }
+            return ret;
         }
 
 
