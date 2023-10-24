@@ -1,26 +1,41 @@
 ﻿var currentIndex = 0;
 var questions = {};
-
+var acc = localStorage.getItem('accountId');
+var key = localStorage.getItem('key');
+var student;
 $(document).ready(() => {
-    $("#exams").remove();
     getQuestions();
+    getStudent();
 });
+
+var getStudent = () => {
+    $.ajax({
+        url: `http://localhost:5024/api/Accounts/${acc}`,
+        type: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: (data) => { student = data; $('#student').text('Student Name : ' + data.fullName) },
+        error: () => alert("Error"),
+    });
+}
+
 
 var getQuestions = () => {
     $.ajax({
-        url: "http://localhost:5024/api/Questions?filter=keyId eq 'MAE101_FA23'",
+        url: `http://localhost:5024/api/Questions?filter=keyId eq '${key}'`,
         type: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         success: (data) => { loadDataTable(data); questions = data; },
-        error: () => { alert("Error"); },
+        error: () => alert("Error"),
     });
 }
 
 var loadDataTable = (questions) => {
     var currentQuestion = questions[currentIndex];
-    
+
     $("#numberAnswer").text(`There are ${questions.length} questions and your progress of answering is`);
     $("#idAnswers").text('Questions ' + (currentIndex + 1));
     $("#numberAnswers").text(currentQuestion.numberRightAnswer);
@@ -48,9 +63,8 @@ function handleBackButtonClick() {
         loadDataTable(questions);
         $("#nextButton").prop("disabled", false);
     }
-    if (currentIndex === 0) {
+    if (currentIndex === 0)
         $("#backButton").prop("disabled", true);
-    }
 }
 
 function handleNextButtonClick() {
@@ -59,7 +73,6 @@ function handleNextButtonClick() {
         loadDataTable(questions);
         $("#backButton").prop("disabled", false);
     }
-    if (currentIndex === questions.length - 1) {
+    if (currentIndex === questions.length - 1)
         $("#nextButton").prop("disabled", true);
-    }
 }

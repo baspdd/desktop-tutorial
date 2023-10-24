@@ -24,6 +24,7 @@ body {
     display: inline-flex;
     padding: 10px;
     border: 3px outset white;
+    background-color: white;
 }
 
 #header h2 {

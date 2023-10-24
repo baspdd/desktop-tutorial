@@ -24,13 +24,13 @@ namespace Api.Controllers
         // GET: api/Accounts
         [HttpGet]
         [EnableQuery]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
+        public async Task<ActionResult<bool>> GetAccount(string acc, string pass)
         {
             if (_context.Accounts == null)
             {
                 return NotFound();
             }
-            return await _context.Accounts.ToListAsync();
+            return await _context.Accounts.AnyAsync(c => c.AccountId == acc && c.Password == pass);
         }
 
         // GET: api/Accounts/5

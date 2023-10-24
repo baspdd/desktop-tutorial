@@ -15,44 +15,10 @@
 </head>
 
 <body>
-
-    <div>
-        <h1>Login</h1>
-
-        <h4>Account</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Login" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label class="control-label">Key</label>
-                        <input name="key" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Account</label>
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label"></label>
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-        </div>
-
-
-    </div>
     <div id="exams">
         <div id="header">
             <h2>EOS</h2>
-            <h2>Student Name :</h2>
+            <h2 id="student">Student Name : </h2>
             <h2>Course </h2>
         </div>
         <div id="content">
