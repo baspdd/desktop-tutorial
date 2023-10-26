@@ -13,13 +13,10 @@ public partial class QuestionDTO
 
     public string Answer { get; set; } = null!;
 
-    public string RightAnswer { get; set; } = null!;
+    public int NumberRightAnswer { get; set; }
 
     public virtual KeyDTO Key { get; set; } = null!;
 
     public virtual ICollection<QuestionAnswerDTO> listAnswer
         => Answer.Split('/').Select(answer => new QuestionAnswerDTO { Content = answer, Ticked = false }).ToList();
-
-    public int NumberRightAnswer => RightAnswer.Split('/').Count();
-
 }

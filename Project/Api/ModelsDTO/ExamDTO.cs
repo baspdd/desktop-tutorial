@@ -14,9 +14,6 @@ public partial class ExamDTO
 
     public string? Score { get; set; }
 
-    public virtual AccountDTO Account { get; set; } = null!;
-
     public virtual ICollection<ExamAnswerDTO> ExamAnswers { get; set; } = new List<ExamAnswerDTO>();
 
-    public virtual KeyDTO Key { get; set; } = null!;
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Api.Models;
 
@@ -13,9 +14,11 @@ public partial class Exam
 
     public string? Score { get; set; }
 
-    public virtual Account Account { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Account? Account { get; set; } = null!;
 
     public virtual ICollection<ExamAnswer> ExamAnswers { get; set; } = new List<ExamAnswer>();
 
-    public virtual Key Key { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Key? Key { get; set; } = null!;
 }

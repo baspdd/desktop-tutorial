@@ -1,4 +1,4 @@
-﻿
+﻿USE MASTER
 GO
 /****** Object:  Database [MyStore]    Script Date: 10/26/2022 8:38:04 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'MyStore')
@@ -133,14 +133,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Questions] (
-  [QuestionId] [INT] IDENTITY(1,1) NOT NULL,
+  [QuestionId] [INT] NOT NULL,
   [KeyId] [NVARCHAR](50) NOT NULL,
   [Content] [NVARCHAR](200) NOT NULL,
   [Answer] [NVARCHAR](1000) NOT NULL,
   [RightAnswer] [NVARCHAR](200) NOT NULL,
 CONSTRAINT [PK_Questions] PRIMARY KEY CLUSTERED
     (
-	    [QuestionId] ASC
+	    [QuestionId],[KeyId] ASC
     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -167,12 +167,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ExamAnswers] (
-  [ExamAnswer] [INT] IDENTITY(1,1) NOT NULL,
+  [ExamAnswer] [INT] NOT NULL,
   [ExamId] [INT] NOT NULL,
   [RightRightAnswer] [NVARCHAR](200) NOT NULL,
 CONSTRAINT [PK_ExamAnswers] PRIMARY KEY CLUSTERED
     (
-	    [ExamAnswer] ASC
+	    [ExamAnswer],[ExamId] ASC
     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -226,12 +226,17 @@ VALUES
     ('Key5', 5);
 
 
-INSERT INTO [dbo].[Questions] ([KeyId], [Content], [Answer], [RightAnswer])
+INSERT INTO [dbo].[Questions] ([QuestionId],[KeyId], [Content], [Answer], [RightAnswer])
 VALUES
-    ('MAE101_FA23', '2 + 2?', '4/5/6/7', '1'),
-    ('MAE101_FA23', '2+5?', '5/3/4/7', '4'),
-    ('MAE101_FA23', '2?3', '</>/#/+', '1'),
-    ('MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
-    ('MAE101_FA23', 'haha', '</>/#/+', '1/2/3');
+    (1,'MAE101_FA23', '2 + 2?', '4/5/6/7', '1'),
+    (2,'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
+    (3,'MAE101_FA23', '2?3', '</>/#/+', '1'),
+    (4,'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+    (5,'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
+    (1,'Key2', '2 + 2?', '4/5/6/7', '1'),
+    (2,'Key2', '2+5?', '5/3/4/7', '4'),
+    (3,'Key2', '2?3', '</>/#/+', '1'),
+    (4,'Key2', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+    (5,'Key2', 'haha', '</>/#/+', '1/2/3');
 
 

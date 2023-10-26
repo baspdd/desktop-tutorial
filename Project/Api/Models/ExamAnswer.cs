@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Api.Models;
 
@@ -11,5 +12,6 @@ public partial class ExamAnswer
 
     public string RightRightAnswer { get; set; } = null!;
 
-    public virtual Exam Exam { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Exam? Exam { get; set; } = null!;
 }

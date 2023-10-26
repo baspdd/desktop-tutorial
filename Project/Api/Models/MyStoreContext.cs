@@ -28,15 +28,9 @@ public partial class MyStoreContext : DbContext
     public virtual DbSet<Question> Questions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            var conf = new ConfigurationBuilder()
-              .SetBasePath(Directory.GetCurrentDirectory())
-              .AddJsonFile("appsettings.json").Build();
-            optionsBuilder.UseSqlServer(conf.GetConnectionString("MyCnn"));
-        }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("server = DESKTOP-D0J2I3U\\SQLEXPRESS;database = MyStore;uid=sa;pwd=1001;TrustServerCertificate=true;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
@@ -70,7 +64,7 @@ public partial class MyStoreContext : DbContext
 
         modelBuilder.Entity<ExamAnswer>(entity =>
         {
-            entity.HasKey(e => e.ExamAnswer1);
+            entity.HasKey(e => new { e.ExamAnswer1, e.ExamId });
 
             entity.Property(e => e.ExamAnswer1).HasColumnName("ExamAnswer");
             entity.Property(e => e.RightRightAnswer).HasMaxLength(200);
@@ -93,9 +87,11 @@ public partial class MyStoreContext : DbContext
 
         modelBuilder.Entity<Question>(entity =>
         {
+            entity.HasKey(e => new { e.QuestionId, e.KeyId });
+
+            entity.Property(e => e.KeyId).HasMaxLength(50);
             entity.Property(e => e.Answer).HasMaxLength(1000);
             entity.Property(e => e.Content).HasMaxLength(200);
-            entity.Property(e => e.KeyId).HasMaxLength(50);
             entity.Property(e => e.RightAnswer).HasMaxLength(200);
 
             entity.HasOne(d => d.Key).WithMany(p => p.Questions)
