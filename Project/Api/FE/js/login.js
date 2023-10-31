@@ -1,4 +1,5 @@
-var check1, check2;
+var check1 = check2 = false;
+
 $(document).ready(() => {
 
 });
@@ -7,7 +8,7 @@ var notice = (id, content) => $(`#${id}`).text(content);
 
 var anyKey = (key) => {
     $.ajax({
-        url: `http://localhost:5024/api/Questions/key?key=${key}`,
+        url: `http://localhost:5024/api/Keys/key?key=${key}`,
         type: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -30,9 +31,9 @@ var anyAccount = (acc, pass) => {
 }
 
 var testAsign = () => {
-    notice('key_danger','');
-    notice('account_danger','');
-    
+    notice('key_danger', '');
+    notice('account_danger', '');
+
     anyKey($('#key').val());
     anyAccount($('#account').val(), $('#pass').val())
     if (check1 && check2) {

@@ -3,6 +3,9 @@ var questions = {};
 var acc = localStorage.getItem('accountId');
 var key = localStorage.getItem('key');
 var student;
+
+
+
 $(document).ready(() => {
     getQuestions();
     getStudent();
@@ -49,6 +52,7 @@ var loadDataTable = (questions) => {
             checked: item.ticked,
         }).change(function (event) {
             item.ticked = event.target.checked;
+            updateProgress();
         });
         var label = $("<label>").attr({
             for: item.content,
@@ -76,3 +80,39 @@ function handleNextButtonClick() {
     if (currentIndex === questions.length - 1)
         $("#nextButton").prop("disabled", true);
 }
+
+function updateProgress() {
+    const totalQuestions = questions.length;
+    const tickedQuestions = questions.filter(q => q.listAnswer.some(answer => answer.ticked)).length;
+    const percentage = (tickedQuestions / totalQuestions) * 100;
+
+    $('#progress-bar').css('width', percentage + '%');
+    $('#progress-bar').text(percentage.toFixed(0) + '%');
+}
+
+var submit = () => {
+    var exam = {
+        accountId: acc,
+        keyId: key,
+        examAnswers: questions.map(element => ({
+            examAnswer1: element.questionId,
+            rightRightAnswer: element.listAnswer
+                .map((answer, index) => answer.ticked ? `/${++index}` : '')
+                .join('').substring(1)
+        }))
+    };
+    onsubmit(exam);
+};
+
+
+var onsubmit = (exam) => $.ajax({
+    url: `http://localhost:5024/api/Questions`,
+    type: 'POST',
+    headers: {
+        "Content-type": "application/json"
+    },
+    data: JSON.stringify(exam),
+    success: () => { localStorage.removeItem("key"); localStorage.removeItem("accountId"); },
+    error: () => { alert('error'); }
+});
+

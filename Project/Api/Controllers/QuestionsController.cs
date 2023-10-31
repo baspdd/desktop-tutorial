@@ -49,12 +49,6 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("key")]
-        [EnableQuery]
-        public async Task<ActionResult<bool>> GetKey(string key)
-        {
-            return await _context.Keys.AnyAsync(c => c.KeyId == key);
-        }
 
 
         [HttpPost]
@@ -83,22 +77,22 @@ namespace Api.Controllers
 
 
         // GET: api/Questions/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Question>> GetQuestion(int id)
-        {
-            if (_context.Questions == null)
-            {
-                return NotFound();
-            }
-            var question = await _context.Questions.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Question>> GetQuestion(int id)
+        //{
+        //    if (_context.Questions == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var question = await _context.Questions.FindAsync(id);
 
-            if (question == null)
-            {
-                return NotFound();
-            }
+        //    if (question == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return question;
-        }
+        //    return question;
+        //}
 
         // PUT: api/Questions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
