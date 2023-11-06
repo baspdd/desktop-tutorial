@@ -24,13 +24,16 @@ namespace Api.Controllers
         // GET: api/Accounts
         [HttpGet]
         [EnableQuery]
-        public async Task<ActionResult<bool>> GetAccount(string acc, string pass)
+        public async Task<ActionResult<int>> GetAccount(string acc, string pass, string key)
         {
-            if (_context.Accounts == null)
+            if (_context.Accounts == null || _context.Keys == null)
             {
                 return NotFound();
             }
-            return await _context.Accounts.AnyAsync(c => c.AccountId == acc && c.Password == pass);
+            if (!_context.Keys.Any(c => c.KeyId == key)) return 1;
+            if (!_context.Accounts.Any(c => c.AccountId == acc && c.Password == pass)) return 2;
+            if (_context.Exams.Any(c => c.AccountId == acc && c.KeyId == key)) return 3;
+            return 4;
         }
 
         // GET: api/Accounts/5

@@ -9,7 +9,33 @@ var student;
 $(document).ready(() => {
     getQuestions();
     getStudent();
+    getCourse();
+    countDown();
 });
+
+var countDown = () => {
+
+    var minutes = 1;
+    var seconds = 0;
+
+    var countdownInterval = setInterval(function () {
+        if (minutes === 0 && seconds === 0) {
+            clearInterval(countdownInterval);
+            $('#count_down').text("Time Left 0:0");
+            submit();
+        } else {
+            if (seconds === 0) {
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+            $('#count_down').text("Time Left " + minutes + ":" + seconds.toString().padStart(2, '0'))
+        }
+    }, 1000);
+}
+
+
 
 var getStudent = () => {
     $.ajax({
@@ -23,6 +49,17 @@ var getStudent = () => {
     });
 }
 
+var getCourse = () => {
+    $.ajax({
+        url: `http://localhost:5024/api/Keys/${key}`,
+        type: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: (data) => { student = data; $('#course').text('Coure : ' + data) },
+        error: () => alert("Error"),
+    });
+}
 
 var getQuestions = () => {
     $.ajax({
@@ -90,6 +127,7 @@ function updateProgress() {
     $('#progress-bar').text(percentage.toFixed(0) + '%');
 }
 
+var che;
 var submit = () => {
     var exam = {
         accountId: acc,
@@ -101,6 +139,7 @@ var submit = () => {
                 .join('').substring(1)
         }))
     };
+    che = JSON.stringify(exam);
     onsubmit(exam);
 };
 
@@ -112,7 +151,14 @@ var onsubmit = (exam) => $.ajax({
         "Content-type": "application/json"
     },
     data: JSON.stringify(exam),
-    success: () => { localStorage.removeItem("key"); localStorage.removeItem("accountId"); },
-    error: () => { alert('error'); }
+    success: () => {
+        localStorage.removeItem("key");
+        localStorage.removeItem("accountId");
+        localStorage.setItem("course", $('#course').text());
+        localStorage.setItem("name", $('#student').text());
+        localStorage.setItem("time", $('#count_down').text());
+        location.href = 'success.html';
+    },
+    error: () => { alert('error'); console.error(); }
 });
 

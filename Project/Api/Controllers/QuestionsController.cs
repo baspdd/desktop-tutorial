@@ -48,7 +48,43 @@ namespace Api.Controllers
             return ret;
         }
 
+        [HttpGet("{key}")]
+        [EnableQuery]
+        public async Task<ActionResult> GetExams(string key)
+        {
+            if (_context.Exams == null)
+            {
+                return NotFound();
+            }
+            var list = await _context.Exams.Where(c => c.KeyId == key).Include(c => c.Account).Include(e => e.Key)
+                .Select(c => new
+                {
+                    AccountName = c.Account.FullName,
+                    ExamId = c.ExamId,
+                    Score = c.Score,
+                }).ToListAsync();
+            return Ok(list);
+        }
 
+        [HttpGet("gen/{key}")]
+        [EnableQuery]
+        public async Task<ActionResult> GetExamsGen(string key)
+        {
+            if (_context.Exams == null)
+            {
+                return NotFound();
+            }
+            var list = await _context.Exams.Where(c => c.KeyId == key).Include(c => c.Account)
+                .Select(c => new
+                {
+                    AccountId = c.AccountId,
+                    AccountName = c.Account.FullName,
+                    KeyId = c.KeyId,
+                    Score = c.Score,
+                    ExamAnswers = c.ExamAnswers,
+                }).ToListAsync();
+            return Ok(list);
+        }
 
 
         [HttpPost]
@@ -57,20 +93,20 @@ namespace Api.Controllers
             if (!_context.Accounts.Any(c => c.AccountId == exam.AccountId) || !_context.Keys.Any(c => c.KeyId == exam.KeyId))
                 return Problem();
             var check = exam;
+            var right = await _context.Questions.Where(c => c.KeyId == exam.KeyId).Select(c => c.RightAnswer).ToListAsync();
+            var index = 0;
+            var total = 0;
+            foreach (ExamAnswer item in exam.ExamAnswers)
+            {
+                if (item.RightRightAnswer == right[index]) total++;
+                index++;
+            }
+            double ratio = (double)total / right.Count * 10;
+            exam.Score = ratio.ToString("0.00");
             _context.Exams.Add(exam);
             await _context.SaveChangesAsync();
-            //var inserted = _context.Exams.Last();
-            //if (inserted != null)
-            //{
-            //    List<ExamAnswer> list = new List<ExamAnswer>();
-            //    foreach (var item in exam.ExamAnswers)
-            //    {
-            //        list.Add(new ExamAnswer { ExamAnswer1 = item.ExamAnswer1, ExamId = inserted.ExamId, RightRightAnswer = item.RightRightAnswer });
-            //    }
-            //    _context.ExamAnswers.AddRange(list);
-            //    await _context.SaveChangesAsync();
-            //}
-            return CreatedAtAction("GetQuestion", new { id = exam.ExamId }, exam);
+            return Ok();
+            //return CreatedAtAction("GetQuestion", new { id = exam.ExamId }, exam);
         }
 
 

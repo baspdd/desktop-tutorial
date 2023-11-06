@@ -35,11 +35,14 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("key")]
+        [HttpGet("{key}")]
         [EnableQuery]
-        public async Task<ActionResult<bool>> GetKey(string key)
+        public async Task<ActionResult<string>> GetKey(string key)
         {
-            return await _context.Keys.AnyAsync(c => c.KeyId == key);
+            var ret = await _context.Keys.Include(c =>c.Course)
+                .SingleOrDefaultAsync(c => c.KeyId == key);
+            if (ret == null) return NotFound();
+            return Ok(ret.Course.CourseName);
         }
 
         private bool KeyExists(string id)

@@ -200,43 +200,151 @@ ALTER TABLE [dbo].[ExamAnswers]  WITH CHECK ADD FOREIGN KEY([ExamId])
 REFERENCES [dbo].[Exams] ([ExamId])
 GO
 
+
+USE [MyStore]
+GO
+
 INSERT INTO [dbo].[Accounts] ([AccountId], [Password], [FullName], [Type])
 VALUES
     ('duypdhe160308', '123', 'John Doe', 1),
-    ('User2', 'Password2', 'Jane Smith', 1),
+    ('baspdd', '123', 'Jane Smith', 1),
+    ('duy1', '123', 'Jane Smith', 1),
+    ('duy2', '123', 'Jane Smith', 1),
     ('User3', 'Password3', 'Bob Johnson', 1),
     ('User4', 'Password4', 'Alice Brown', 1),
     ('User5', 'Password5', 'Eve White', 1);
 
-INSERT INTO [dbo].[Courses] ([CourseName])
+
+SET IDENTITY_INSERT [dbo].[Courses] ON;
+
+INSERT INTO [dbo].[Courses] ([CourseId], [CourseName])
 VALUES
-    ('Mathematics'),
-    ('History'),
-    ('Science'),
-    ('Literature'),
-    ('Computer Science');
+    (1, 'Mathematics'),
+    (2, 'History'),
+    (3, 'Science'),
+    (4, 'Literature'),
+    (5, 'Computer Science');
+
+SET IDENTITY_INSERT [dbo].[Courses] OFF;
 
 
 INSERT INTO [dbo].[Keys] ([KeyId], [CourseId])
 VALUES
     ('MAE101_FA23', 1),
+	('MAE101_SU23', 1),
     ('Key2', 2),
     ('Key3', 3),
     ('Key4', 4),
     ('Key5', 5);
 
 
-INSERT INTO [dbo].[Questions] ([QuestionId],[KeyId], [Content], [Answer], [RightAnswer])
-VALUES
-    (1,'MAE101_FA23', '2 + 2?', '4/5/6/7', '1'),
-    (2,'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
-    (3,'MAE101_FA23', '2?3', '</>/#/+', '1'),
-    (4,'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
-    (5,'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
-    (1,'Key2', '2 + 2?', '4/5/6/7', '1'),
-    (2,'Key2', '2+5?', '5/3/4/7', '4'),
-    (3,'Key2', '2?3', '</>/#/+', '1'),
-    (4,'Key2', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
-    (5,'Key2', 'haha', '</>/#/+', '1/2/3');
 
+INSERT INTO [dbo].[Questions] ([QuestionId], [KeyId], [Content], [Answer], [RightAnswer])
+VALUES
+    (1, 'MAE101_FA23', '2 + 2?', '4/5/6/7', '1'),
+    (2, 'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
+    (3, 'MAE101_FA23', '2?3', '</>/#/+', '1'),
+    (4, 'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+    (5, 'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
+    (6, 'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
+    (7, 'MAE101_FA23', '2?3', '</>/#/+', '1'),
+    (8, 'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+    (9, 'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
+    (1, 'Key2', '2 + 2?', '4/5/6/7', '1'),
+    (2, 'Key2', '2+5?', '5/3/4/7', '4'),
+    (3, 'Key2', '2?3', '</>/#/+', '1'),
+    (4, 'Key2', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+    (5, 'Key2', 'haha', '</>/#/+', '1/2/3');
+
+
+SET IDENTITY_INSERT [dbo].[Exams] ON;
+
+INSERT INTO [dbo].[Exams] ([ExamId], [AccountId], [KeyId], [Score])
+VALUES
+    (1, 'duy2', 'MAE101_FA23', '8.5'),
+    (2, 'duy2', 'Key2', '9.2'),
+    (3, 'duy1', 'Key2', '7.8');
+
+SET IDENTITY_INSERT [dbo].[Exams] OFF;
+
+
+INSERT INTO [dbo].[ExamAnswers] ([ExamAnswer], [ExamId], [RightRightAnswer])
+VALUES
+    (1, 1, 'Correct Answer 1'),
+    (2, 1, 'Correct Answer 2'),
+    (3, 1, 'Correct Answer 3'),
+    (4, 2, 'Correct Answer 1'),
+    (5, 2, 'Correct Answer 2'),
+    (6, 2, 'Correct Answer 3'),
+    (7, 3, 'Correct Answer 1'),
+    (8, 3, 'Correct Answer 2'),
+    (9, 3, 'Correct Answer 3'),
+    (10, 3, 'Correct Answer 4');
+
+
+
+-- INSERT INTO [dbo].[Accounts] ([AccountId], [Password], [FullName], [Type])
+-- VALUES
+--     ('duypdhe160308', '123', 'John Doe', 1),
+--     ('baspdd', '123', 'Jane Smith', 1),
+--     ('duy1', '123', 'Jane Smith', 1),
+--     ('duy2', '123', 'Jane Smith', 1),
+--     ('User3', 'Password3', 'Bob Johnson', 1),
+--     ('User4', 'Password4', 'Alice Brown', 1),
+--     ('User5', 'Password5', 'Eve White', 1);
+
+-- INSERT INTO [dbo].[Courses] ([CourseName])
+-- VALUES
+--     ('Mathematics'),
+--     ('History'),
+--     ('Science'),
+--     ('Literature'),
+--     ('Computer Science');
+
+
+-- INSERT INTO [dbo].[Keys] ([KeyId], [CourseId])
+-- VALUES
+--     ('MAE101_FA23', 1),
+--     ('Key2', 2),
+--     ('Key3', 3),
+--     ('Key4', 4),
+--     ('Key5', 5);
+
+
+-- INSERT INTO [dbo].[Questions] ([QuestionId],[KeyId], [Content], [Answer], [RightAnswer])
+-- VALUES
+--     (1,'MAE101_FA23', '2 + 2?', '4/5/6/7', '1'),
+--     (2,'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
+--     (3,'MAE101_FA23', '2?3', '</>/#/+', '1'),
+--     (4,'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+--     (5,'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
+--     (6,'MAE101_FA23', '2+5?', '5/3/4/7', '4'),
+--     (7,'MAE101_FA23', '2?3', '</>/#/+', '1'),
+--     (8,'MAE101_FA23', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+--     (9,'MAE101_FA23', 'haha', '</>/#/+', '1/2/3'),
+--     (1,'Key2', '2 + 2?', '4/5/6/7', '1'),
+--     (2,'Key2', '2+5?', '5/3/4/7', '4'),
+--     (3,'Key2', '2?3', '</>/#/+', '1'),
+--     (4,'Key2', 'n + 2 = 9. n? ', '3/6/7/9', '3'),
+--     (5,'Key2', 'haha', '</>/#/+', '1/2/3');
+
+-- INSERT INTO [dbo].[Exams] ([AccountId], [KeyId], [Score])
+-- VALUES
+--     ('duy2', 'MAE101_FA23', '85'),
+--     ('duy2', 'Key2', '92'),
+--     ('duy1', 'Key2', '78');
+
+
+-- INSERT INTO [dbo].[ExamAnswers] ([ExamId], [RightRightAnswer])
+-- VALUES
+--     (1, 'Correct Answer 1'),
+--     (1, 'Correct Answer 2'),
+--     (1, 'Correct Answer 3'),
+--     (2, 'Correct Answer 1'),
+--     (2, 'Correct Answer 2'),
+--     (2, 'Correct Answer 3'),
+--     (3, 'Correct Answer 1'),
+--     (3, 'Correct Answer 2'),
+--     (3, 'Correct Answer 3'),
+--     (3, 'Correct Answer 4');
 
