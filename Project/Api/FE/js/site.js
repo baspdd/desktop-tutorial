@@ -1,9 +1,8 @@
 ﻿var currentIndex = 0;
-var questions = {};
 var acc = localStorage.getItem('accountId');
 var key = localStorage.getItem('key');
 var student;
-
+var questions;
 
 
 $(document).ready(() => {
@@ -22,7 +21,7 @@ var countDown = () => {
         if (minutes === 0 && seconds === 0) {
             clearInterval(countdownInterval);
             $('#count_down').text("Time Left 0:0");
-            submit();
+            // submit();
         } else {
             if (seconds === 0) {
                 minutes--;
@@ -68,10 +67,31 @@ var getQuestions = () => {
         headers: {
             "Content-Type": "application/json",
         },
-        success: (data) => { loadDataTable(data); questions = data; },
+        success: (data) => {  questions = data;  loadDataTable(questions)},
         error: () => alert("Error"),
     });
 }
+
+function generateRandomNumbers(lowerBound) {
+    var randomNum1 = Math.floor(Math.random() * lowerBound);
+    var randomNum2 = randomNum1;
+
+    while (randomNum2 === randomNum1) {
+        randomNum2 = Math.floor(Math.random() * lowerBound);
+    }
+
+    return [randomNum1, randomNum2];
+}
+
+function modifiedData(questions) {
+    $.each(questions, (index, question) => {
+        var randomNumbers = generateRandomNumbers(question.listAnswer.length);
+        var temp = question.listAnswer[randomNumbers[0]];
+        question.listAnswer[randomNumbers[0]] = question.listAnswer[randomNumbers[1]];
+        question.listAnswer[randomNumbers[1]] = temp;
+    })
+}
+
 
 var loadDataTable = (questions) => {
     var currentQuestion = questions[currentIndex];
@@ -135,14 +155,13 @@ var submit = () => {
         examAnswers: questions.map(element => ({
             examAnswer1: element.questionId,
             rightRightAnswer: element.listAnswer
-                .map((answer, index) => answer.ticked ? `/${++index}` : '')
+                .map((answer, index) => answer.ticked ? `/${answer.id}` : '')
                 .join('').substring(1)
         }))
     };
     che = JSON.stringify(exam);
     onsubmit(exam);
 };
-
 
 var onsubmit = (exam) => $.ajax({
     url: `http://localhost:5024/api/Questions`,
@@ -161,4 +180,3 @@ var onsubmit = (exam) => $.ajax({
     },
     error: () => { alert('error'); console.error(); }
 });
-

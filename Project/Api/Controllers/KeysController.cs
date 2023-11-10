@@ -45,6 +45,34 @@ namespace Api.Controllers
             return Ok(ret.Course.CourseName);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Question>> PostQuestion(KeyDTO key)
+        {
+            if (!_context.Courses.Any(c => c.CourseId == key.CourseId) || _context.Keys.Any(c => c.KeyId == key.KeyId))
+                return Problem();
+            Key input = new Key
+            {
+                KeyId = key.KeyId,
+                CourseId = key.CourseId,
+            };
+            foreach (QuestionDTO ques in key.Questions)
+            {
+                Question que = new Question
+                {
+                    QuestionId = ques.QuestionId,
+                    KeyId = ques.KeyId,
+                    Content = ques.Content,
+                    Answer = ques.Answer,
+                    RightAnswer = ques.RightAnswer,
+                };
+                input.Questions.Add(que);
+            }
+
+            _context.Keys.Add(input);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         private bool KeyExists(string id)
         {
             return (_context.Keys?.Any(e => e.KeyId == id)).GetValueOrDefault();

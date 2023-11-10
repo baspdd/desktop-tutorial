@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 });
-
+var check;
 function handleFileChange(input) {
     var file = input.files[0];
     readXlsxFile(file).then(function (data) {
@@ -16,11 +16,15 @@ function handleFileChange(input) {
                 if (hash_data.includes(item)) indices.push(celIndex);
             });
         });
-       
+
         data.forEach((row, rowIndex) => {
+            var question;
             row.forEach((cell, celIndex) => {
                 if (rowIndex > rowStart && celIndex >= indices[0]) {
+                    if (cell) {
+                        if(celIndex == indices[0])
                         console.log(cell);
+                    }
                 }
             });
         });
