@@ -35,6 +35,9 @@
                 <div id="keys" style="display: none;">
                     <div class="blue" style="display: none;">
                         Filter <input type="text" id="key" placeholder="course .. " class=""> </div>
+                        <input type="file" id="input" name="input" onchange="handleFileChange(this)" class="btn btn-primary">
+                    <br>
+                    <br>
                     <div id="listKey">
                     </div>
                 </div>
@@ -62,14 +65,20 @@
         </div>
     </div>
 </body>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/write-excel-file@1.x/bundle/write-excel-file.min.js"></script> -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-
-<script src="https://unpkg.com/write-excel-file@1.x/bundle/write-excel-file.min.js"></script>
-
-<script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+
 <script src="/js/course.js" asp-append-version="true"></script>
 
 </html>

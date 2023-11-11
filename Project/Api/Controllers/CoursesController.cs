@@ -26,29 +26,30 @@ namespace Api.Controllers
         [EnableQuery]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-          if (_context.Courses == null)
-          {
-              return NotFound();
-          }
+            if (_context.Courses == null)
+            {
+                return NotFound();
+            }
             return await _context.Courses.ToListAsync();
         }
 
         // GET: api/Courses/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetCourse(int id)
+        [HttpGet("{courseName}")]
+        public async Task<ActionResult> GetCourse(string courseName)
         {
-          if (_context.Courses == null)
-          {
-              return NotFound();
-          }
-            var course = await _context.Courses.FindAsync(id);
+            if (_context.Courses == null)
+            {
+                return NotFound();
+            }
+            var course = await _context.Courses.
+                SingleOrDefaultAsync(c => c.CourseName.ToLower().Equals(courseName.ToLower()));
 
             if (course == null)
             {
                 return NotFound();
             }
 
-            return course;
+            return Ok(course.CourseId);
         }
 
         //// PUT: api/Courses/5

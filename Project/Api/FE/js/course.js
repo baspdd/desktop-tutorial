@@ -1,9 +1,10 @@
-
-var check;
 $(document).ready(() => {
     getCourse();
 
 });
+
+var check;
+var courseID;
 
 var getCourse = () => {
     $.ajax({
@@ -26,7 +27,67 @@ var loadCourse = (data) => {
     });
 };
 
+
+function handleFileChange(input) {
+    var file = input.files[0];
+    readXlsxFile(file).then(function (data) {
+
+        const hash_data = ['Question', 'Answer', 'RightAnswer']
+        const indices = [];
+        var rowStart = 0;
+
+        data.forEach((row, rowIndex) => {
+            if (row[0] == 'Stt') rowStart = rowIndex;
+            row.forEach((item, celIndex) => {
+                if (hash_data.includes(item)) indices.push(celIndex);
+            });
+        });
+
+        var excel = {
+            keyId: data[0][1],
+            courseId: courseID,
+        };
+
+        var questions = [];
+        data.forEach((row, rowIndex) => {
+            if (rowIndex > rowStart) {
+
+                row.forEach((cell, celIndex) => {
+                    if (celIndex >= indices[1] && celIndex < indices[2]) {
+                        if (cell) {
+                            console.log(cell);
+                        }
+                    }
+                });
+
+                questions.push({
+                    questionId: row[0],
+                    keyId: data[0][1],
+                    content: row[indices[0]],
+
+                    // "answer": "string",
+                    // "rightAnswer": "string",
+                    // "numberRightAnswer": 0
+                });
+            }
+
+            row.forEach((cell, celIndex) => {
+
+                if (rowIndex > rowStart && celIndex >= indices[0]) {
+                    if (cell) {
+                        // console.log(cell);
+
+                    }
+                }
+            });
+        });
+        // console.log(questions);
+
+    });
+}
+
 var getKeys = (id) => {
+    courseID = id;
     $.ajax({
         url: `http://localhost:5024/api/Keys?$filter=CourseId eq ${id}&select=keyId`,
         type: "GET",

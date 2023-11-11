@@ -1,10 +1,28 @@
 $(document).ready(function () {
 
 });
+
+
+var courseID;
 var check;
+
+var getCourse = (courseName) => {
+    $.ajax({
+        url: `http://localhost:5024/api/Courses/${courseName}`,
+        type: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: (data) => { courseID = data },
+        error: () => alert("Error"),
+    });
+}
+
+
 function handleFileChange(input) {
     var file = input.files[0];
     readXlsxFile(file).then(function (data) {
+
 
         const hash_data = ['Question', 'Answer', 'RightAnswer']
         const indices = [];
@@ -17,13 +35,18 @@ function handleFileChange(input) {
             });
         });
 
+        var question = {
+            examId: data[0][1],
+            courseId: courseID,
+        };
+        console.log(question);
+
         data.forEach((row, rowIndex) => {
-            var question;
             row.forEach((cell, celIndex) => {
                 if (rowIndex > rowStart && celIndex >= indices[0]) {
                     if (cell) {
-                        if(celIndex == indices[0])
-                        console.log(cell);
+                        if (celIndex == indices[0])
+                            console.log(cell);
                     }
                 }
             });
@@ -32,6 +55,22 @@ function handleFileChange(input) {
     });
 }
 
+
+
+// {
+//     "keyId": "string",
+//     "courseId": 0,
+//     "questions": [
+//       {
+//         "questionId": 0,
+//         "keyId": "string",
+//         "content": "string",
+//         "answer": "string",
+//         "rightAnswer": "string",
+//         "numberRightAnswer": 0
+//       }
+//     ]
+//   }
 function compare(cell, title) {
 
 }
