@@ -72,7 +72,19 @@
 #submit-button {
     margin-top: auto;
 }
+#paging{
+    display: flex;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
 
+.paging{
+    font-size: 16px;
+    cursor: pointer;
+    height: 25px;
+    width: 20px;
+    text-align: center;
+}
 .btn-container {
    
 }

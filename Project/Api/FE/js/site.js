@@ -67,7 +67,12 @@ var getQuestions = () => {
         headers: {
             "Content-Type": "application/json",
         },
-        success: (data) => {  questions = data;  loadDataTable(questions)},
+        success: (data) => {
+            questions = data;
+            modifiedData(questions);
+            
+            // loadPaging(questions);
+        },
         error: () => alert("Error"),
     });
 }
@@ -90,7 +95,28 @@ function modifiedData(questions) {
         question.listAnswer[randomNumbers[0]] = question.listAnswer[randomNumbers[1]];
         question.listAnswer[randomNumbers[1]] = temp;
     })
+    for (var i = 0; i < questions.length; i++) {
+        var randomQuestion = generateRandomNumbers(questions.length);
+        var temp = questions[randomQuestion[0]];
+        questions[randomQuestion[0]] = questions[randomQuestion[1]];
+        questions[randomQuestion[1]] = temp;
+    }
+    loadDataTable(questions);
 }
+
+var moveQuestion = (index) => {
+    currentIndex = index;
+    loadDataTable(questions);
+}
+
+var loadPaging = (data) => {
+    $('#paging').empty();
+    data.forEach(item => {
+        var index = item.questionId - 1;
+        var html = `<div onclick='moveQuestion(${index})' class="btn-primary paging">${item.questionId}</div>`;
+        $('#paging').append(html);
+    });
+};
 
 
 var loadDataTable = (questions) => {
@@ -102,20 +128,40 @@ var loadDataTable = (questions) => {
     $("#questionContent").text(currentQuestion.content);
     $("#checkboxList").empty();
 
-    $.each(currentQuestion.listAnswer, (index, item) => {
-        var checkbox = $("<input>").attr({
-            type: 'checkbox',
-            id: item.content,
-            checked: item.ticked,
-        }).change(function (event) {
-            item.ticked = event.target.checked;
-            updateProgress();
+
+    if (currentQuestion.numberRightAnswer == 1) {
+        $.each(currentQuestion.listAnswer, (index, item) => {
+            var checkbox = $("<input>").attr({
+                type: 'radio',
+                id: item.content,
+                checked: item.ticked,
+                name: currentQuestion.content
+            }).change(function (event) {
+                item.ticked = event.target.checked;
+                updateProgress();
+            });
+            var label = $("<label>").attr({
+                for: item.content,
+            }).text(item.content);
+            $("#checkboxList").append(checkbox, label, $("<br>"));
         });
-        var label = $("<label>").attr({
-            for: item.content,
-        }).text(item.content);
-        $("#checkboxList").append(checkbox, label, $("<br>"));
-    });
+    } else {
+        $.each(currentQuestion.listAnswer, (index, item) => {
+            var checkbox = $("<input>").attr({
+                type: 'checkbox',
+                id: item.content,
+                checked: item.ticked,
+            }).change(function (event) {
+                item.ticked = event.target.checked;
+                updateProgress();
+            });
+            var label = $("<label>").attr({
+                for: item.content,
+            }).text(item.content);
+            $("#checkboxList").append(checkbox, label, $("<br>"));
+        });
+    }
+
 }
 
 function handleBackButtonClick() {
@@ -149,6 +195,8 @@ function updateProgress() {
 
 var che;
 var submit = () => {
+    questions.sort((a, b) => a.questionId - b.questionId);
+    
     var exam = {
         accountId: acc,
         keyId: key,

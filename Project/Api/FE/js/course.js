@@ -1,6 +1,9 @@
 $(document).ready(() => {
     getCourse();
-
+    // if (valid == 0){
+    //     $('#login-container').hide();
+    //     $('#exams').show();
+    // }
 });
 
 var check;
@@ -43,46 +46,43 @@ function handleFileChange(input) {
             });
         });
 
-        var excel = {
-            keyId: data[0][1],
-            courseId: courseID,
-        };
-
         var questions = [];
         data.forEach((row, rowIndex) => {
             if (rowIndex > rowStart) {
-
+                var ans = rightans = '';
                 row.forEach((cell, celIndex) => {
-                    if (celIndex >= indices[1] && celIndex < indices[2]) {
-                        if (cell) {
-                            console.log(cell);
-                        }
+                    if (cell) {
+                        if (celIndex >= indices[1] && celIndex < indices[2]) ans += '/' + cell;
+                        else if (celIndex >= indices[2]) rightans += '/' + cell;
                     }
                 });
-
                 questions.push({
                     questionId: row[0],
                     keyId: data[0][1],
                     content: row[indices[0]],
-
-                    // "answer": "string",
-                    // "rightAnswer": "string",
+                    answer: ans.substring(1),
+                    rightAnswer: rightans.substring(1),
                     // "numberRightAnswer": 0
                 });
             }
-
-            row.forEach((cell, celIndex) => {
-
-                if (rowIndex > rowStart && celIndex >= indices[0]) {
-                    if (cell) {
-                        // console.log(cell);
-
-                    }
-                }
-            });
         });
-        // console.log(questions);
 
+        var excel = {
+            keyId: data[0][1],
+            courseId: courseID,
+            questions: questions,
+        };
+
+        $.ajax({
+            url: `http://localhost:5024/api/Keys`,
+            type: 'POST',
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: JSON.stringify(excel),
+            success: () => getKeys(courseID),
+            error: () => { alert('error'); console.error(); }
+        });
     });
 }
 
@@ -132,10 +132,22 @@ var loadTable = (data) => {
             <td>${item.examId}</td>
             <td>${item.accountName}</td>
             <td>${item.score}</td>
+            <td><button class="btn btn-primary" onclick="deleteProduct(${item.examId})">Re-Asign</button></td>
         </tr>`;
         $('#table').append(html);
     });
 };
+
+
+var deleteProduct = (id) => $.ajax({
+    url: `http://localhost:5024/api/Questions/${id}`,
+    type: 'DELETE',
+    headers: {
+        "Content-type": "application/json"
+    },
+    success: () => {},
+    error: () => { alert('error'); }
+});
 
 
 var generate = () => {
@@ -199,5 +211,33 @@ var exportExcel = (formal) => {
     writeXlsxFile(arrayOfArrays, {
         fileName: 'file.xlsx'
     })
+}
+
+var valid = 2;
+var anyAccount = (acc, pass) => {
+    $.ajax({
+        url: `http://localhost:5024/api/Accounts/Staff?acc=${acc}&pass=${pass}`,
+        type: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: (data) => { valid = data },
+        error: () => { alert("Error"); },
+    });
+}
+
+var testAsign = () => {
+    anyAccount($('#account').val(), $('#pass').val())
+    switch (valid) {
+        case 1:
+            $('#login_danger').text("account is not valid");
+            break;
+        case 0:
+            $('#login-container').hide();
+            $('#exams').show();
+            break;
+        default:
+            break;
+    }
 }
 

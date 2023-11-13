@@ -109,7 +109,7 @@ namespace Api.Controllers
             //return CreatedAtAction("GetQuestion", new { id = exam.ExamId }, exam);
         }
 
-        
+
 
 
         // GET: api/Questions/5
@@ -176,25 +176,23 @@ namespace Api.Controllers
         //    return CreatedAtAction("GetQuestion", new { id = question.QuestionId }, question);
         //}
 
-        // DELETE: api/Questions/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteQuestion(int id)
-        //{
-        //    if (_context.Questions == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var question = await _context.Questions.FindAsync(id);
-        //    if (question == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpDelete("{examid}")]
+        public async Task<IActionResult> DeleteQuestion(int examid)
+        {
+            if (_context.Exams == null) return NotFound();
+            var exam = await _context.Exams.
+                Include(c => c.ExamAnswers).Include(c => c.Key)
+                .SingleOrDefaultAsync(c => c.ExamId == examid);
 
-        //    _context.Questions.Remove(question);
-        //    await _context.SaveChangesAsync();
+            if (exam == null) return NotFound();
 
-        //    return NoContent();
-        //}
+            exam.ExamAnswers.Clear();
+            //exam.Key.Clear();
+            //exam.Key.Clear();
+            _context.Exams.Remove(exam);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
         private bool QuestionExists(int id)
         {

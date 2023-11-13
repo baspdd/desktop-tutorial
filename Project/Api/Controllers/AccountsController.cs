@@ -36,6 +36,17 @@ namespace Api.Controllers
             return 4;
         }
 
+
+        [HttpGet("Staff")]
+        [EnableQuery]
+        public async Task<ActionResult> GetAccountStaff(string acc, string pass)
+        {
+            if (_context.Accounts == null)
+                return NotFound();
+            if (_context.Accounts.Any(c => c.AccountId == acc && c.Password == pass && c.Type == 0)) return Ok(0);
+            return Ok(1);
+        }
+
         // GET: api/Accounts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AccountDTO>> GetAccount(string id)
