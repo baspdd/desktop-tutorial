@@ -88,22 +88,36 @@ namespace Api.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Question>> PostExam(Exam exam)
+        public async Task<ActionResult<Question>> PostExam(ExamSubmit exam)
         {
             if (!_context.Accounts.Any(c => c.AccountId == exam.AccountId) || !_context.Keys.Any(c => c.KeyId == exam.KeyId))
                 return Problem();
-            var check = exam;
             var right = await _context.Questions.Where(c => c.KeyId == exam.KeyId).Select(c => c.RightAnswer).ToListAsync();
             var index = 0;
             var total = 0;
-            foreach (ExamAnswer item in exam.ExamAnswers)
+
+            Exam submit = new Exam()
             {
+                AccountId = exam.AccountId,
+                KeyId = exam.KeyId,
+                Score = exam.Score,
+            };
+
+            foreach (ExamAnswerDTO item in exam.ExamAnswers)
+            {
+                //ExamAnswer answer = new ExamAnswer()
+                //{
+                //    ExamAnswer1 = item.ExamAnswer1,
+                //    ExamId = item.ExamId,
+                //    RightRightAnswer = item.RightRightAnswer,
+                //};
+
                 if (item.RightRightAnswer == right[index]) total++;
                 index++;
             }
             double ratio = (double)total / right.Count * 10;
-            exam.Score = ratio.ToString("0.00");
-            _context.Exams.Add(exam);
+            submit.Score = ratio.ToString("0.00");
+            _context.Exams.Add(submit);
             await _context.SaveChangesAsync();
             return Ok();
             //return CreatedAtAction("GetQuestion", new { id = exam.ExamId }, exam);
