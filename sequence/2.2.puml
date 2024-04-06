@@ -1,0 +1,42 @@
+@startuml
+actor       User       as user
+participant ShelvesView as view
+participant ShelvesController as shelves
+participant CategoryController as category
+participant MsgService as msgService
+database    Database    as db
+
+alt click nav title
+    user -> view ++: 1. click nav title
+    view -> shelves ++ : 2. Request multiple APIs
+    shelves -> shelves ++ : 3. Process multiple methods
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgPagingReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Response Payload Format
+    deactivate view
+
+else click category title
+    user -> view ++: 1. click category title
+    view -> shelves ++ : 2. Request multiple APIs
+    shelves -> shelves ++ : 3. Process multiple methods
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgPagingReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Return Payload Format
+
+
+    view -> category ++ : 2. Send Request
+    category -> category ++ : 3. Process GetCategoriy()
+    category -> db ++ : 4.Query data
+    db --> category -- : 5. Return data
+    category -> msgService ++-- : 6. MsgReturn()
+    deactivate category
+    msgService --> view -- : 7. Response Payload Format
+
+end
+view --> user -- : 9. Display Shelves Page
+
+@enduml

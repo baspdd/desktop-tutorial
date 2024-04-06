@@ -1,0 +1,41 @@
+@startuml
+actor       User       as user
+participant AuthorDetailView as view
+participant ShelvesController as shelves
+participant AuthorsController as author
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. click author name
+view -> author ++ : 2. Request API
+author -> author ++ : 3. Process GetAuthor()
+author -> db ++ : 4.Query data
+db --> author -- : 5. Return data
+author -> msgService ++-- : 6. MsgReturn()
+deactivate author
+msgService --> view -- : 7. Response Payload Format
+
+alt default
+
+    view -> shelves ++ : 2. Request API
+    shelves -> shelves ++ : 3. Process GetStoryByAuthorId()
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Response Payload Format
+else click on title
+    view -> shelves ++ : 2. Request API
+    shelves -> shelves ++ : 3. Process relate method 
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Response Payload Format
+end
+
+
+view --> user -- : 8. Display Author Detail Page
+@enduml
+
+

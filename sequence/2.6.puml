@@ -1,0 +1,33 @@
+@startuml
+actor       User       as user
+participant ChapterContentView as view
+participant ChaptersController as chapter
+participant CommentsController as comment
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. click chapter
+view -> chapter ++ : 2. Request API
+chapter -> chapter ++ : 3. Process GetChapterContent()
+chapter -> db ++ : 4.Query data
+db --> chapter -- : 5. Return data
+chapter -> msgService ++-- : 6. MsgReturn()
+deactivate chapter
+alt user owned chapter
+    msgService --> view -- : 7. Response Payload Format
+else not owned
+    msgService --> view -- : 7. Response Payload Format without content
+end
+
+view -> comment ++ : 2. Request API
+comment -> comment ++ : 3. Process GetChapterComments()
+comment -> db ++ : 4.Query data
+db --> comment -- : 5. Return data
+comment -> msgService ++-- : 6. MsgReturn()
+deactivate comment
+msgService --> view -- : 7. Response Payload Format
+
+view --> user -- : 8. Display Chapter Content Page
+@enduml
+
+

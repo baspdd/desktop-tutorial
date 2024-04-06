@@ -1,0 +1,45 @@
+@startuml
+actor       User       as user
+participant FilterView as view
+participant ShelvesController as shelves
+participant CategoryController as category
+participant MsgService as msgService
+database    Database    as db
+
+alt click filter
+    user -> view ++: 1. click filter
+    view -> shelves ++ : 2. Request API
+    shelves -> shelves ++ : 3. Process GetFilter()
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgPagingReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Response Payload Format
+
+    view -> category ++ : 2. Request API
+    category -> category ++ : 3. GetOptionFilter()
+    category -> db ++ : 4.Query data
+    db --> category -- : 5. Return data
+    category -> msgService ++-- : 6. MsgReturn()
+    deactivate category
+    msgService --> view -- : 7. Response Payload Format
+    view --> user -- : 8. Display Filter Page
+
+end
+
+
+alt filter
+    user -> view ++: 1. chose filter options
+    view -> shelves ++ : 2. Request API
+    shelves -> shelves ++ : 3. Process GetFilter()
+    shelves -> db ++ : 4.Query data
+    db --> shelves -- : 5. Return data
+    shelves -> msgService ++-- : 6. MsgPagingReturn()
+    deactivate shelves
+    msgService --> view -- : 7. Response Payload Format
+    view --> user -- : 8. Display Filter Page
+end
+
+
+
+@enduml

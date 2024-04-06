@@ -1,0 +1,20 @@
+@startuml
+
+actor       User       as user
+participant HomeView as view
+participant ShelvesController as shelves
+participant MsgService as msgService
+database    Database    as db
+
+user -> view ++: 1. click logo/link
+view -> shelves ++ : 2. Request multiple APIs
+shelves -> shelves ++ : 3. Process multiple methods
+shelves -> db ++ : 4.Query data
+db --> shelves -- : 5. Return data
+shelves -> msgService ++-- : 6. MsgPagingReturn()
+deactivate shelves
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display Home Page
+
+@enduml
+
