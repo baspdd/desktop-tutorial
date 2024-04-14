@@ -1,0 +1,31 @@
+@startuml
+actor       Admin       as user
+participant TransactionManagementView as view
+
+participant TicketsController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click Export
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process ExportRefunds()
+controller -> db ++ : 4.Query data
+db --> controller -- : 5. Return data
+controller -> msgService ++-- : 6. MsgReturn()
+deactivate controller
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Return Excel
+
+user -> view ++: 9. Click update
+view -> controller ++ : 10. Request API
+controller -> controller ++ : 11. Process ApproveRefund()
+controller -> db ++ : 12.Query data
+db --> controller -- : 13. Return data
+controller -> msgService ++-- : 14. MsgReturn()
+deactivate controller
+msgService --> view -- : 15. Response Payload Format
+view --> user -- : 16. Display Transaction Management Page
+@enduml
+
+

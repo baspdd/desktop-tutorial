@@ -1,0 +1,20 @@
+@startuml
+actor       Admin       as user
+participant GenresManagement as view
+
+participant CategoriesController as controller
+
+database    Database as db
+
+user -> view ++: 1. Click add genre
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process PostCategory()
+controller -> db ++ : 54.Query data
+db --> controller -- : 6. Return
+controller -> view -- : 7. Response Payload Format
+deactivate controller
+view --> user -- : 8. Display Genres Management Page
+
+@enduml
+
+

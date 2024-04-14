@@ -6,7 +6,7 @@ participant CommentsController as comment
 participant MsgService as msgService
 database    Database as db
 
-user -> view ++: 1. click chapter
+user -> view ++: 1. Click chapter
 view -> chapter ++ : 2. Request API
 chapter -> chapter ++ : 3. Process GetChapterContent()
 chapter -> db ++ : 4.Query data

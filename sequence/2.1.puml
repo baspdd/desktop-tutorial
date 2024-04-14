@@ -6,7 +6,7 @@ participant ShelvesController as shelves
 participant MsgService as msgService
 database    Database    as db
 
-user -> view ++: 1. click logo/link
+user -> view ++: 1. Click logo/link
 view -> shelves ++ : 2. Request multiple APIs
 shelves -> shelves ++ : 3. Process multiple methods
 shelves -> db ++ : 4.Query data

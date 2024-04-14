@@ -1,0 +1,32 @@
+@startuml
+actor       Author       as user
+participant StoryManagementView as view
+
+participant ChaptersController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click story
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process GetVolumeName()
+controller -> db ++ : 4.Query data
+db --> controller -- : 5. Return data
+controller -> msgService ++-- : 6. MsgReturn()
+deactivate controller
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display Stories Management Page
+
+user -> view ++: 9. Click volume
+view -> controller ++ : 10. Request API
+controller -> controller ++ : 11. Process GetVolume()
+controller -> db ++ : 12.Query data
+db --> controller -- : 13. Return data
+controller -> msgService ++-- : 14. MsgReturn()
+deactivate controller
+msgService --> view -- : 15. Response Payload Format
+view --> user -- : 16. Display Stories Management Page
+
+@enduml
+
+

@@ -1,0 +1,20 @@
+@startuml
+actor       User       as user
+participant View as view
+participant ReportsController as controller
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click report
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process GetReportType()
+controller -> db ++ : 4.Query data
+db --> controller -- : 5. Return data
+controller -> msgService ++-- : 6. MsgReturn()
+deactivate controller
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display Report Form View
+
+@enduml
+
+

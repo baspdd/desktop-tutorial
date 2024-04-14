@@ -1,0 +1,21 @@
+@startuml
+actor       Admin       as user
+participant StoryManagelView as view
+participant StoriesController as story
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click stories management
+view -> story ++ : 2. Request API
+story -> story ++ : 3. Process GetStories()
+story -> db ++ : 4.Query data
+db --> story -- : 5. Return data
+story -> msgService ++-- : 6. MsgReturn()
+deactivate story
+msgService --> view -- : 7. Response Payload Format
+
+view --> user -- : 8. Display Stories Management Page
+
+@enduml
+
+

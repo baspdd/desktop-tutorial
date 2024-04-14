@@ -6,7 +6,7 @@ participant AuthorsController as author
 participant MsgService as msgService
 database    Database as db
 
-user -> view ++: 1. click author name
+user -> view ++: 1. Click author name
 view -> author ++ : 2. Request API
 author -> author ++ : 3. Process GetAuthor()
 author -> db ++ : 4.Query data

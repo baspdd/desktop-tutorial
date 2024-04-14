@@ -1,0 +1,23 @@
+@startuml
+actor       User       as user
+participant ChapterPublishView as view
+
+participant ChaptersController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click edit chapter
+user -> view : 2. Edit parameters
+view -> controller ++ : 3. Request API
+controller -> controller ++ : 4. Process SaveStory()
+controller -> db ++ : 5.Query data
+db --> controller -- : 6. Return
+controller -> view -- : 7. Response Payload Format
+deactivate controller
+view --> user -- : 8. Display Chapter Publish Page
+
+
+@enduml
+
+

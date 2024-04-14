@@ -1,0 +1,22 @@
+@startuml
+actor       User       as user
+participant StoryDetailView as view
+
+participant TransactionsController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click purchase
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process AddTransactionBuyStory()
+controller -> db ++ : 4.Query data
+db --> controller -- : 5. Return
+controller -> msgService ++-- : 6. MsgActionReturn()
+deactivate controller
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display Story Detail Page
+
+@enduml
+
+

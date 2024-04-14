@@ -7,7 +7,7 @@ participant MsgService as msgService
 database    Database    as db
 
 alt click filter
-    user -> view ++: 1. click filter
+    user -> view ++: 1. Click filter
     view -> shelves ++ : 2. Request API
     shelves -> shelves ++ : 3. Process GetFilter()
     shelves -> db ++ : 4.Query data
@@ -29,7 +29,7 @@ end
 
 
 alt filter
-    user -> view ++: 1. chose filter options
+    user -> view ++: 1. Chose filter options
     view -> shelves ++ : 2. Request API
     shelves -> shelves ++ : 3. Process GetFilter()
     shelves -> db ++ : 4.Query data

@@ -5,28 +5,15 @@ participant InteractionsController as interact
 participant MsgService as msgService
 database    Database as db
 
-user -> view ++: 1. click like/follow
+user -> view ++: 1. Click like/follow
 view -> interact ++ : 2. Request API
 interact -> interact ++ : 3. Process method
 interact -> db ++ : 4.Query data
 db --> interact -- : 5. Return
 interact -> msgService ++-- : 6. MsgReturn()
 deactivate interact
-alt user owned interact
-    msgService --> view -- : 7. Response Payload Format
-else not owned
-    msgService --> view -- : 7. Response Payload Format without content
-end
-
-view -> comment ++ : 2. Request API
-comment -> comment ++ : 3. Process GetChapterComments()
-comment -> db ++ : 4.Query data
-db --> comment -- : 5. Return data
-comment -> msgService ++-- : 6. MsgReturn()
-deactivate comment
 msgService --> view -- : 7. Response Payload Format
-
-view --> user -- : 8. Display Chapter Content Page
+view --> user -- : 8. Display Story Detail Page
 @enduml
 
 

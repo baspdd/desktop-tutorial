@@ -1,0 +1,37 @@
+@startuml
+actor       User       as user
+participant WalletView as view
+
+participant TransactionsController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click top up
+alt momo payment
+    user -> view : 2. Chose momo payment
+    view -> controller ++ : 3. Request API
+    controller -> controller ++-- : 4. Process SendMomoRequest()
+    controller --> view -- : 5. Return request link
+    deactivate view
+else    vnpay payment
+    user -> view ++: 2. Chose vnpay payment
+    view -> controller ++ : 3. Request API
+    controller -> controller ++-- : 4. Process SendVnpayRequest()
+    controller --> view -- : 5. Return request link
+    deactivate view
+end
+
+view --> user  : 6. Refactor payment form
+user -> view ++: 7. Top up success
+view -> controller ++ : 8. Request API
+controller -> controller ++ : 9. Process AddTransactionTopUp()
+controller -> db ++ : 10.Query data
+db --> controller -- : 11. Return
+controller -> msgService ++-- : 12. MsgReturn()
+deactivate controller
+msgService --> view -- : 13. Response Payload Format
+view --> user -- : 14. Display Wallet Page
+@enduml
+
+

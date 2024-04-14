@@ -1,0 +1,23 @@
+@startuml
+actor       Author       as user
+participant ChapterPublishView as view
+
+participant ChaptersController as controller
+
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click add chapter
+user -> view : 2. Fill parameters
+view -> controller ++ : 3. Request API
+controller -> controller ++ : 4. Process AddChapter()
+controller -> db ++ : 5.Query data
+db --> controller -- : 6. Return
+controller -> view -- : 7. Response Payload Format
+deactivate controller
+view --> user -- : 8. Display Chapter Publish Page
+
+
+@enduml
+
+

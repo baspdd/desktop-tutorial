@@ -1,0 +1,20 @@
+@startuml
+actor       User       as user
+participant PersonalShelves as view
+participant PersonalShelves as view
+participant ShelvesController as shelves
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Click navbar title on ProfileView
+view -> shelves ++ : 2. Request API
+shelves -> shelves ++ : 3. Process relate method
+shelves -> db ++ : 4.Query data
+db --> shelves -- : 5. Return data
+shelves -> msgService ++-- : 6. MsgPagingReturn()
+deactivate shelves
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display Personal Shelves Page
+@enduml
+
+

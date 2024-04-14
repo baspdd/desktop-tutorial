@@ -1,0 +1,20 @@
+@startuml
+actor       User       as user
+participant View as view
+participant CommentController as controller
+participant MsgService as msgService
+database    Database as db
+
+user -> view ++: 1. Leave comment
+view -> controller ++ : 2. Request API
+controller -> controller ++ : 3. Process SendComment()
+controller -> db ++ : 4.Query data
+db --> controller -- : 5. Return
+controller -> msgService ++-- : 6. MsgActionReturn()
+deactivate controller
+msgService --> view -- : 7. Response Payload Format
+view --> user -- : 8. Display View
+
+@enduml
+
+
